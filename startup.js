@@ -61,7 +61,7 @@
     // DOM Manipulation
     // ======================
 
-    // 6. Simple DOM selector like jQuery's $
+    // 6. Simple DOM selector like jQuery's 
     startup.$ = function (selector) {
         return document.querySelector(selector);
     };
@@ -137,12 +137,18 @@
     };
 
     // 13. Get a value from local storage
-    startup.getLocalStorage = function (key) {
-        if (key) {
-            return JSON.parse(localStorage.getItem(key));
-        }
+   startup.getLocalStorage = function (key) {
+    if (!key || typeof key !== 'string') {
+        console.warn('Invalid key for localStorage');
         return null;
-    };
+    }
+    try {
+        return JSON.parse(localStorage.getItem(key));
+    } catch (e) {
+        console.error('Failed to parse JSON from localStorage for key:', key, e);
+        return null;
+    }
+};
 
     // 14. Remove a value from local storage
     startup.removeLocalStorage = function (key) {
